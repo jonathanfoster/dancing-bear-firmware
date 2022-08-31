@@ -1,5 +1,5 @@
-#ifndef LOGGER_H_
-#define LOGGER_H_
+#ifndef LOGGING_LOGGER_H_
+#define LOGGING_LOGGER_H_
 
 #include <Arduino.h>
 
@@ -38,4 +38,4 @@ class Logger {
 
 }  // namespace logging
 
-#endif  // LOGGER_H_
+#endif  // LOGGING_LOGGER_H_
