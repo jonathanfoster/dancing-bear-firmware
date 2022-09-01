@@ -10,7 +10,7 @@ class Task {
   void run();
 
  private:
-  bool _cancelled = false;
+  bool _is_cancelled = false;
   void (*_func)();
 };
 

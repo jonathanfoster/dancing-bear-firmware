@@ -4,10 +4,10 @@ namespace events {
 
 Task::Task(void (*func)()) { _func = func; }
 
-void Task::cancel() { _cancelled = true; }
+void Task::cancel() { _is_cancelled = true; }
 
 void Task::run() {
-  if (!_cancelled) {
+  if (!_is_cancelled) {
     _func();
   }
 }

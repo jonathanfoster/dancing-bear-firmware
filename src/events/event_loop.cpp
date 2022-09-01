@@ -17,9 +17,15 @@ Task* EventLoop::createTask(void (*func)()) {
 }
 
 void EventLoop::run() {
+  if (_is_stopped) {
+    return;
+  }
+
   for (size_t i = 0; i < _task_index; i++) {
     _tasks[i]->run();
   }
 }
+
+void EventLoop::stop() { _is_stopped = true; }
 
 }  // namespace events

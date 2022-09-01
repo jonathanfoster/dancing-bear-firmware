@@ -12,8 +12,10 @@ class EventLoop {
   EventLoop();
   Task* createTask(void (*f)());
   void run();
+  void stop();
 
  private:
+  bool _is_stopped = false;
   int32_t _task_max = 100;
   int32_t _task_index = 0;
   Task* _tasks[100];
