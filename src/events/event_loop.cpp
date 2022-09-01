@@ -1,18 +1,14 @@
 #include "events/event_loop.h"
 
+#include <LinkedList.h>
+
 namespace events {
 
-EventLoop::EventLoop() {}
+EventLoop::EventLoop() { this->_tasks = new LinkedList<Task*>(); }
 
 Task* EventLoop::createTask(void (*func)()) {
-  if (this->_task_index > this->_task_max) {
-    return NULL;
-  }
-
   Task* task = new Task(func);
-  this->_tasks[_task_index] = new Task(func);
-  this->_task_index++;
-
+  this->_tasks->add(task);
   return task;
 }
 
@@ -21,8 +17,8 @@ void EventLoop::run() {
     return;
   }
 
-  for (size_t i = 0; i < this->_task_index; i++) {
-    this->_tasks[i]->run();
+  for (int i = 0; i < this->_tasks->size(); i++) {
+    this->_tasks->get(i)->run();
   }
 }
 

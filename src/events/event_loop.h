@@ -2,6 +2,7 @@
 #define EVENTS_EVENT_LOOP_H_
 
 #include <Arduino.h>
+#include <LinkedList.h>
 
 #include "events/task.h"
 
@@ -16,9 +17,7 @@ class EventLoop {
 
  private:
   bool _is_stopped = false;
-  int32_t _task_max = 100;
-  int32_t _task_index = 0;
-  Task* _tasks[100];
+  LinkedList<Task*>* _tasks;
 };
 
 }  // namespace events
