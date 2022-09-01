@@ -3,27 +3,40 @@
 #include "events/event_loop.h"
 #include "logging/logger.h"
 #include "machine/button.h"
+#include "machine/pin.h"
 
 #define BUTTON_PIN 36
+#define MOTOR_PIN 0
 #define SERIAL_BAUD 9600
 
-machine::Button* button;
+machine::Pin* button_pin;
+machine::Pin* motor_pin;
 events::EventLoop* event_loop;
 logging::Logger* logger;
 
-void checkButtonState() { button->checkState(); }
+void buttonChange(machine::Pin* pin) {
+  logger->info(
+      (String("button changed:value=") + String(pin->value())).c_str());
+}
 
-void logButtonPress() { logger->info("button pressed"); }
+void checkPinValue() { button_pin->checkValue(); }
+
+void logButtonPress() {
+  logger->info("button pressed: toggling motor");
+  motor_pin->toggle();
+}
 
 void setup() {
   Serial.begin(SERIAL_BAUD);
   logger = new logging::Logger("main");
 
-  button = new machine::Button(BUTTON_PIN);
-  button->onPress(logButtonPress);
+  button_pin = new machine::Pin(BUTTON_PIN, INPUT, HIGH);
+  button_pin->onChange(buttonChange);
+
+  motor_pin = new machine::Pin(MOTOR_PIN, OUTPUT);
 
   event_loop = new events::EventLoop();
-  event_loop->createTask(checkButtonState);
+  event_loop->createTask(checkPinValue);
 
   logger->info("application started");
 }
