@@ -2,14 +2,12 @@
 
 namespace events {
 
-Task::Task(void (*func)()) { _func = func; }
-
 Task::Task(void (*func)()) { this->_func = func; }
 
-void Task::cancel() { this->is_cancelled = true; }
+void Task::cancel() { this->_is_cancelled = true; }
 
 void Task::run() {
-  if (this->is_cancelled) {
+  if (this->_is_cancelled) {
     return;
   }
 

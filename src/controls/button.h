@@ -8,15 +8,21 @@ namespace controls {
 class Button {
  public:
   Button(uint8_t pin);
+  Button(uint8_t pin, int default_state);
   void checkState();
+  unsigned long debounce();
+  void debounce(unsigned long value);
   void onPress(void (*handler)());
 
  private:
-  unsigned long _debounce_delay = 10;
-  unsigned long _last_debounce_time = 0;
+  void setup();
+
+  unsigned long _debounce = 50;
+  unsigned long _last_debounce = 0;
   int _state = LOW;
   int _last_state = LOW;
   uint8_t _pin;
+  int _default_state = HIGH;
   void (*_press_handler)();
 };
 
