@@ -1,8 +1,8 @@
-#include "controls/button.h"
+#include "machine/button.h"
 
 #include <Arduino.h>
 
-namespace controls {
+namespace machine {
 
 Button::Button(uint8_t pin) {
   this->_pin = pin;
@@ -49,4 +49,4 @@ bool Button::checkIsPressed() {
 
 void Button::setup() { pinMode(this->_pin, INPUT); }
 
-}  // namespace controls
+}  // namespace machine

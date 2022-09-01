@@ -1,9 +1,9 @@
-#ifndef CONTROLS_BUTTON_H_
-#define CONTROLS_BUTTON_H_
+#ifndef MACHINE_BUTTON_H_
+#define MACHINE_BUTTON_H_
 
 #include <Arduino.h>
 
-namespace controls {
+namespace machine {
 
 class Button {
  public:
@@ -27,6 +27,6 @@ class Button {
   void (*_press_handler)();
 };
 
-}  // namespace controls
+}  // namespace machine
 
-#endif  // CONTROLS_BUTTON_H_
+#endif  // MACHINE_BUTTON_H_
