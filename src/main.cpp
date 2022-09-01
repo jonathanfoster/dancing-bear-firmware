@@ -24,6 +24,8 @@ void setup() {
 
   event_loop = new events::EventLoop();
   event_loop->createTask(checkButtonState);
+
+  logger->info("application started");
 }
 
 void loop() { event_loop->run(); }
