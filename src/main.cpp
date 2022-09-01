@@ -13,15 +13,17 @@ void checkButtonState() {
   button->checkState();
 }
 
-void logButtonPress() { logger->info("button press"); }
+void logButtonPress() { logger->info("button pressed"); }
 
 void logLoopRun() { logger->info("running event loop"); }
 
 void setup() {
   Serial.begin(115200);
+  logger = new logging::Logger("main");
+
   button = new controls::Button(12);
   button->onPress(logButtonPress);
-  logger = new logging::Logger("main");
+
   event_loop = new events::EventLoop();
   event_loop->createTask(logLoopRun);
   event_loop->createTask(checkButtonState);

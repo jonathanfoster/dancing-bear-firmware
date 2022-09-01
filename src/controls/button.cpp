@@ -5,31 +5,31 @@
 namespace controls {
 
 Button::Button(uint8_t pin) {
-  _pin = pin;
-  pinMode(_pin, INPUT);
+  this->_pin = pin;
+  pinMode(this->_pin, INPUT);
 }
 
 void Button::checkState() {
   int current_state = digitalRead(_pin);
-  if (current_state != _last_state) {
-    _last_debounce_time = millis();
+  if (current_state != this->_last_state) {
+    this->_last_debounce_time = millis();
   }
 
   if (millis() - _last_debounce_time > _debounce_delay) {
-    if (current_state != _state) {
-      _state = current_state;
+    if (current_state != this->_state) {
+      this->_state = current_state;
     }
 
-    if (_state == HIGH) {
-      if (_press_handler) {
-        _press_handler();
+    if (this->_state == HIGH) {
+      if (this->_press_handler) {
+        this->_press_handler();
       }
     }
   }
 
-  _last_state = current_state;
+  this->_last_state = current_state;
 }
 
-void Button::onPress(void (*handler)()) { _press_handler = handler; }
+void Button::onPress(void (*handler)()) { this->_press_handler = handler; }
 
 }  // namespace controls

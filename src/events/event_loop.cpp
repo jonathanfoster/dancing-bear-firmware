@@ -5,27 +5,27 @@ namespace events {
 EventLoop::EventLoop() {}
 
 Task* EventLoop::createTask(void (*func)()) {
-  if (_task_index > _task_max) {
-    return nullptr;
+  if (this->_task_index > this->_task_max) {
+    return NULL;
   }
 
   Task* task = new Task(func);
-  _tasks[_task_index] = new Task(func);
-  _task_index++;
+  this->_tasks[_task_index] = new Task(func);
+  this->_task_index++;
 
   return task;
 }
 
 void EventLoop::run() {
-  if (_is_stopped) {
+  if (this->_is_stopped) {
     return;
   }
 
-  for (size_t i = 0; i < _task_index; i++) {
-    _tasks[i]->run();
+  for (size_t i = 0; i < this->_task_index; i++) {
+    this->_tasks[i]->run();
   }
 }
 
-void EventLoop::stop() { _is_stopped = true; }
+void EventLoop::stop() { this->_is_stopped = true; }
 
 }  // namespace events
