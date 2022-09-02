@@ -30,7 +30,7 @@ class Pin {
   void low();
   void high();
 
-  void checkValue();
+  bool checkValue();
   uint8_t readValue();
   void onChange(void (*handler)(Pin*));
 

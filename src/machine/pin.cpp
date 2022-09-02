@@ -67,23 +67,26 @@ void Pin::low() { this->off(); }
 
 void Pin::high() { this->on(); }
 
-void Pin::checkValue() {
+bool Pin::checkValue() {
   uint8_t current_value = this->readValue();
   if (current_value != this->_last_value) {
     this->_last_value = current_value;
     this->_last_debounce = millis();
   }
 
-  if (millis() - this->_last_debounce > this->_debounce) {
-    if (current_value == this->value()) {
-      return;
-    }
+  bool value_changed = false;
 
-    this->value(current_value);
-    if (this->_change_handler) {
-      this->_change_handler(this);
+  if (millis() - this->_last_debounce > this->_debounce) {
+    if (current_value != this->value()) {
+      value_changed = true;
+      this->value(current_value);
+      if (this->_change_handler) {
+        this->_change_handler(this);
+      }
     }
   }
+
+  return value_changed;
 }
 
 void Pin::onChange(void (*handler)(Pin*)) { this->_change_handler = handler; }
