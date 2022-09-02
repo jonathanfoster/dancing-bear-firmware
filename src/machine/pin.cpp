@@ -6,7 +6,7 @@ namespace machine {
 
 Pin::Pin(uint8_t id) {
   this->_id = id;
-  this->init(INPUT);
+  this->init(OUTPUT);
 }
 
 Pin::Pin(uint8_t id, uint8_t mode) {
@@ -23,10 +23,9 @@ void Pin::init(uint8_t mode) { this->init(mode, LOW); }
 
 void Pin::init(uint8_t mode, uint8_t pull) {
   this->pull(pull);
-  this->_last_value = pull;
-  this->_last_debounce = millis();
   this->mode(mode);
   pinMode(this->_id, mode);
+  this->value(pull);
 }
 
 int Pin::debounce() { return this->_debounce; }
@@ -49,6 +48,7 @@ void Pin::value(uint8_t new_value) {
   }
 
   this->_value = new_value;
+  this->_last_value = new_value;
 }
 
 void Pin::on() { this->value(HIGH); }
@@ -69,7 +69,7 @@ void Pin::high() { this->on(); }
 
 bool Pin::checkValue() {
   uint8_t current_value = this->readValue();
-  if (current_value != this->_last_value) {
+  if (current_value != this->_last_value || this->_last_debounce == 0) {
     this->_last_value = current_value;
     this->_last_debounce = millis();
   }
