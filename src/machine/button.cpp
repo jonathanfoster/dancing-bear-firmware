@@ -10,6 +10,10 @@ Button::Button(uint8_t id, uint8_t pull) {
   this->_pin = new Pin(id, INPUT, pull);
 }
 
+int Button::debounce() { return this->_pin->debounce(); }
+
+void Button::debounce(int new_value) { this->_pin->debounce(new_value); }
+
 bool Button::checkValue() {
   bool value_changed = this->_pin->checkValue();
 
@@ -26,6 +30,11 @@ bool Button::checkValue() {
 
 void Button::onPress(void (*handler)(Button*)) {
   this->_press_handler = handler;
+}
+
+void Button::init(uint8_t id, uint8_t pull) {
+  this->_pin = new Pin(id, INPUT, pull);
+  this->_pin->debounce(300);
 }
 
 }  // namespace machine

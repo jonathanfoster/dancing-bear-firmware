@@ -14,8 +14,8 @@ class Pin {
   void init(uint8_t mode);
   void init(uint8_t mode, uint8_t pull);
 
-  uint8_t debounce();
-  void debounce(uint8_t new_value);
+  int debounce();
+  void debounce(int new_value);
   uint8_t mode();
   void mode(uint8_t new_value);
   uint8_t pull();
@@ -36,8 +36,8 @@ class Pin {
 
  private:
   void (*_change_handler)(Pin*) = NULL;
-  uint8_t _debounce = 20;
-  uint8_t _last_debounce = 0;
+  int _debounce = 20;
+  unsigned long _last_debounce = 0;
   uint8_t _id = 0;
   uint8_t _mode = LOW;
   uint8_t _pull = LOW;

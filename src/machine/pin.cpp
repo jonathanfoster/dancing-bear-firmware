@@ -29,9 +29,9 @@ void Pin::init(uint8_t mode, uint8_t pull) {
   pinMode(this->_id, mode);
 }
 
-uint8_t Pin::debounce() { return this->_debounce; }
+int Pin::debounce() { return this->_debounce; }
 
-void Pin::debounce(uint8_t new_value) { this->_debounce = new_value; }
+void Pin::debounce(int new_value) { this->_debounce = new_value; }
 
 uint8_t Pin::mode() { return this->_mode; }
 
