@@ -35,7 +35,7 @@ class Pin {
   void onChange(void (*handler)(Pin*));
 
  private:
-  void (*_change_handler)(Pin*);
+  void (*_change_handler)(Pin*) = NULL;
   uint8_t _debounce = 20;
   uint8_t _last_debounce = 0;
   uint8_t _id = 0;
