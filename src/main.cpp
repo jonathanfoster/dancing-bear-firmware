@@ -6,8 +6,8 @@
 #include "machine/pin.h"
 
 #define BUTTON_PIN 36
-#define LED_PIN 12
-#define MOTOR_PIN 14
+#define LED_PIN 25
+#define MOTOR_PIN 12
 #define SERIAL_BAUD 9600
 
 machine::Button* button;
