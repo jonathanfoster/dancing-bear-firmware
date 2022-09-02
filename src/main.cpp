@@ -28,6 +28,7 @@ void logButtonPress() {
 
 void setup() {
   Serial.begin(SERIAL_BAUD);
+  Serial.println("");
   logger = new logging::Logger("main");
 
   button_pin = new machine::Pin(BUTTON_PIN, INPUT, HIGH);
