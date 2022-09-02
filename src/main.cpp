@@ -26,7 +26,6 @@ void buttonPressed(machine::Button* button) {
 void setup() {
   Serial.begin(SERIAL_BAUD);
   Serial.println("");
-  logger = new logging::Logger("main");
 
   button = new machine::Button(BUTTON_PIN, HIGH);
   button->onPress(buttonPressed);
@@ -37,7 +36,7 @@ void setup() {
   event_loop = new events::EventLoop();
   event_loop->createTask(checkButtonValue);
 
-  logger->info("application started");
+  LOG_INFO("main", "application started");
 }
 
 void loop() { event_loop->run(); }
