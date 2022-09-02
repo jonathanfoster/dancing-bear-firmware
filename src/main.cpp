@@ -32,10 +32,7 @@ void setup() {
   button->onPress(buttonPressed);
 
   led_pin = new machine::Pin(LED_PIN, OUTPUT);
-  led_pin->off();
-
   motor_pin = new machine::Pin(MOTOR_PIN, OUTPUT);
-  motor_pin->off();
 
   event_loop = new events::EventLoop();
   event_loop->createTask(checkButtonValue);
