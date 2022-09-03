@@ -29,7 +29,11 @@ void buttonCheckValueTask(void* parameter) {
 void buttonPressed(machine::Button* sender) {
   led_pin->toggle();
   motor_pin->toggle();
-  audio_player->play(audio::merry_christmas_melody);
+  if (!audio_player->isPlaying()) {
+    audio_player->play(audio::merry_christmas_melody);
+  } else {
+    audio_player->stop();
+  }
 }
 
 void setup() {

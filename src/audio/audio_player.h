@@ -12,18 +12,17 @@ class AudioPlayer {
   AudioPlayer(uint8_t pin_id);
 
   bool isPlaying();
-  bool repeat();
-  void repeat(bool new_value);
 
-  void pause();
   void play(Melody* melody);
   void stop();
 
  private:
+  static void playMelodyTask(void* parameter);
+
   Melody* _melody = NULL;
   bool _is_playing = false;
   uint8_t _pin_id = 0;
-  bool _is_repeat = false;
+  TaskHandle_t _play_melody_task_handle = NULL;
 };
 
 }  // namespace audio
