@@ -19,14 +19,8 @@ machine::Pin* led_pin;
 machine::Pin* motor_pin;
 machine::Pin* speaker_pin;
 
-void buttonCheckValueTask(void* parameter) {
-  for (;;) {
-    button->checkValue();
-    vTaskDelay(10 / portTICK_PERIOD_MS);
-  }
-}
-
 void buttonPressed(machine::Button* sender) {
+  LOG_INFO("main", "button pressed");
   led_pin->toggle();
   motor_pin->toggle();
   if (!audio_player->isPlaying()) {
@@ -46,8 +40,6 @@ void setup() {
   audio_player = new audio::AudioPlayer(AUDIO_PLAYER_PIN);
   led_pin = new machine::Pin(LED_PIN, OUTPUT);
   motor_pin = new machine::Pin(MOTOR_PIN, OUTPUT);
-
-  xTaskCreate(buttonCheckValueTask, "Button Check Value", 1024, NULL, 1, NULL);
 
   LOG_INFO("main", "application started");
 }

@@ -14,6 +14,7 @@ class Pin {
   void init(uint8_t mode);
   void init(uint8_t mode, uint8_t pull);
 
+  uint8_t id();
   int debounce();
   void debounce(int new_value);
   uint8_t mode();

@@ -28,6 +28,8 @@ void Pin::init(uint8_t mode, uint8_t pull) {
   this->value(pull);
 }
 
+uint8_t Pin::id() { return this->_id; }
+
 int Pin::debounce() { return this->_debounce; }
 
 void Pin::debounce(int new_value) { this->_debounce = new_value; }

@@ -9,13 +9,19 @@ namespace audio {
 
 AudioPlayer::AudioPlayer(uint8_t pin_id) { this->_pin_id = pin_id; }
 
+AudioPlayer::~AudioPlayer() {
+  if (this->_play_melody_task_handle) {
+    vTaskDelete(this->_play_melody_task_handle);
+  }
+}
+
 bool AudioPlayer::isPlaying() { return this->_is_playing; }
 
 void AudioPlayer::play(Melody* melody) {
   this->_melody = melody;
   this->_is_playing = true;
-  xTaskCreate(this->playMelodyTask, "Play Melody", 1024, this, 2,
-              &this->_play_melody_task_handle);
+  xTaskCreate(this->playMelodyTask, "Play Melody", configMINIMAL_STACK_SIZE,
+              this, 2, &this->_play_melody_task_handle);
 }
 
 void AudioPlayer::stop() {

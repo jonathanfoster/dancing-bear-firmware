@@ -10,6 +10,7 @@ namespace audio {
 class AudioPlayer {
  public:
   AudioPlayer(uint8_t pin_id);
+  ~AudioPlayer();
 
   bool isPlaying();
 
