@@ -2,7 +2,6 @@
 
 #include "audio/audio_player.h"
 #include "audio/songs.h"
-#include "events/event_loop.h"
 #include "logging/logger.h"
 #include "machine/button.h"
 #include "machine/pin.h"
@@ -16,21 +15,21 @@
 
 audio::AudioPlayer* audio_player;
 machine::Button* button;
-events::EventLoop* event_loop;
 machine::Pin* led_pin;
 machine::Pin* motor_pin;
 machine::Pin* speaker_pin;
 
-void checkButtonValue() { button->checkValue(); }
+void buttonCheckValueTask(void* parameter) {
+  for (;;) {
+    button->checkValue();
+    vTaskDelay(10 / portTICK_PERIOD_MS);
+  }
+}
 
 void buttonPressed(machine::Button* sender) {
   led_pin->toggle();
   motor_pin->toggle();
-  if (!audio_player->isPlaying()) {
-    audio_player->play(audio::merry_christmas_melody);
-  } else {
-    audio_player->stop();
-  }
+  audio_player->play(audio::merry_christmas_melody);
 }
 
 void setup() {
@@ -44,10 +43,9 @@ void setup() {
   led_pin = new machine::Pin(LED_PIN, OUTPUT);
   motor_pin = new machine::Pin(MOTOR_PIN, OUTPUT);
 
-  event_loop = new events::EventLoop();
-  event_loop->createTask(checkButtonValue);
+  xTaskCreate(buttonCheckValueTask, "Button Check Value", 1024, NULL, 1, NULL);
 
   LOG_INFO("main", "application started");
 }
 
-void loop() { event_loop->run(); }
+void loop() {}
