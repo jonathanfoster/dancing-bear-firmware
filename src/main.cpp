@@ -2,16 +2,10 @@
 
 #include "audio/audio_player.h"
 #include "audio/songs.h"
+#include "config.h"
 #include "logging/logger.h"
 #include "machine/button.h"
 #include "machine/pin.h"
-
-#define SERIAL_BAUD 9600
-
-#define AUDIO_PLAYER_PIN 14
-#define BUTTON_PIN 36
-#define LED_PIN 25
-#define MOTOR_PIN 12
 
 audio::AudioPlayer* audio_player;
 machine::Button* button;
@@ -21,18 +15,24 @@ machine::Pin* speaker_pin;
 
 void buttonPressed(machine::Button* sender) {
   LOG_INFO("main", "button pressed");
+  LOG_INFO("main", "toggling led");
   led_pin->toggle();
+  LOG_INFO("main", "toggling motor");
   motor_pin->toggle();
   if (!audio_player->isPlaying()) {
+    LOG_INFO("main", "playing melody");
     audio_player->play(audio::merry_christmas_melody);
   } else {
+    LOG_INFO("main", "stopping melody");
     audio_player->stop();
   }
 }
 
 void setup() {
   Serial.begin(SERIAL_BAUD);
-  Serial.println("");
+  Serial.print(LOGO);
+
+  LOG_INFO("main", "initializing application");
 
   button = new machine::Button(BUTTON_PIN, HIGH);
   button->onPress(buttonPressed);
