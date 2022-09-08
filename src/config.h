@@ -1,10 +1,10 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
-#define AUDIO_PLAYER_PIN 14
-#define BUTTON_PIN 36
-#define LED_PIN 25
-#define MOTOR_PIN 12
+#define AUDIO_PLAYER_PIN 25
+#define BUTTON_PIN 34
+#define LED_PIN 14
+#define MOTOR_PIN 13
 
 #define SERIAL_BAUD 9600
 
